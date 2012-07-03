@@ -34,6 +34,7 @@ var Scratch = $Class({
 
 		if(this._hasTouch()) {
 			//Touch Event
+            alert("hasTouch");
 			this._wfTouchStart = jindo.$Fn(this._onTouchStart, this);
 			this._wfTouchMove = jindo.$Fn(this._onTouchMove, this);
 			this._wfTouchEnd = jindo.$Fn(this._onTouchEnd, this);
@@ -43,6 +44,7 @@ var Scratch = $Class({
 			this._wfTouchEnd.attach(this._elCanvas, "touchend");
 		} else {
 			//Mouse Event
+            alert("hasMouse");
 			this._wfMouseDown = jindo.$Fn(this._onMouseDown, this);
 			this._wfMouseMove = jindo.$Fn(this._onMouseMove, this);
 			this._wfMouseUp = jindo.$Fn(this._onMouseUp, this);
