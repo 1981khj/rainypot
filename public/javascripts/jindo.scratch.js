@@ -81,7 +81,7 @@ var Scratch = $Class({
 	},
 	_onTouchStart : function(oEvent) {
 		console.log("_onTouchStart");
-		oEvent.stop($Event.CANCEL_ALL);
+		//oEvent.stop($Event.CANCEL_ALL);
 		this._bScratch = true;
 		this._onScratchDown(oEvent);		
 		this._overScratchPercentage(this._getScratchPercentage());
