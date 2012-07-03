@@ -85,20 +85,20 @@ var Scratch = $Class({
 		console.log("_onTouchStart");
 		oEvent.stop($Event.CANCEL_ALL);
 		this._bScratch = true;
-		this._onScratchDown(oEvent);		
+		this._onScratchDown(oEvent.touches[0]);		
 		this._overScratchPercentage(this._getScratchPercentage());
 	},
 	_onTouchMove : function(oEvent) {
 		console.log("_onTouchMove");
 		if(this._bScratch){
-			this._onScratchMove(oEvent);
+			this._onScratchMove(oEvent.touches[0]);
 			this._overScratchPercentage(this._getScratchPercentage());
 		}
 	},
 	_onTouchEnd : function(oEvent) {
 		console.log("_onTouchEnd");
 		if(this._bScratch){
-			this._onScratchUp(oEvent);
+			this._onScratchUp(oEvent.touches[0]);
 			this._bScratch = false;
 			this._overScratchPercentage(this._getScratchPercentage());
 		}
@@ -186,7 +186,7 @@ var Scratch = $Class({
 		}
 	},
 	_drawLog : function(htLog){
-		var elLog = $("<div>"+htLog.pageX+":"+htLog.pageY+"</div>");  
+		var elLog = $("<div>"+htLog.pageX+" : "+htLog.pageY+"</div>");  
 		this._welScratchLog.append(elLog);
 	}
 });
