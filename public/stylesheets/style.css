@@ -1,8 +1,20 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande",
+    Helvetica,
+    Arial,
+    sans - serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+}
+
+# scratchpad {
+    cursor: default;
+    position:
+    relative;
+    width: 210px;
+    height: 100px;
+    background-image: url(/images/scratch-to-win.png);
 }
