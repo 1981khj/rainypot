@@ -169,7 +169,7 @@ var Scratch = $Class({
 	},
 	_overScratchPercentage : function(nPercentage){
 		if(this._nDefaultPercentage <= nPercentage){
-			alert("다긁었다..");
+			alert("다긁었다...");
 			this._bScratch = false;
 		}
 	}
