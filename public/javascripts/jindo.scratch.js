@@ -28,6 +28,7 @@ var Scratch = $Class({
 	_assignElements : function() {
 		console.log("_assignElements");
 		this._welScratchPad = jindo.$Element("scratchpad");
+		this._welScratchLog = jindo.$Element("scratchlog");
 		this._elCanvas = document.createElement('canvas');		
 		this._welCanvas = jindo.$Element(this._elCanvas);
 		this._oCtx = this._elCanvas.getContext('2d');
@@ -174,6 +175,8 @@ var Scratch = $Class({
 			"pageY" : Math.floor(oPosition.pageY - this._htCanvasOffset.top)
 		};
 		
+		this._drawLog(htPosition);
+		
 		return htPosition
 	},
 	_overScratchPercentage : function(nPercentage){
@@ -181,5 +184,9 @@ var Scratch = $Class({
 			alert("다긁었다..");
 			this._bScratch = false;
 		}
+	},
+	_drawLog : function(htLog){
+		var elLog = $("<div>"+htLog.pageX+":"+htLog.pageY+"</div>");  
+		this._welScratchLog.append(elLog);
 	}
 });
