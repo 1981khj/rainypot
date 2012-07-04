@@ -186,7 +186,7 @@ var Scratch = $Class({
 			"pageY" : Math.floor(oPositionY - this._htCanvasOffset.top)
 		};
 		
-		this._drawLog(htPosition);
+		//this._drawLog(htPosition);
 		
 		return htPosition
 	},
