@@ -1,51 +1,4 @@
-/**
- * @author nhn
- */
-var Scratch = $Class({
-    _elCanvas : null,
-	_oCtx : null,
-	_nWidth : 210,
-	_nHeight : 100,
-	_nPixels : null,
-	_sColor : "ff0000",
-	_sImagePath : "",
-	_nCursorSize : 10,
-	_bScratch : false,
-	_bSupportTouch : false,
-	_nDefaultPercentage : 70,
-	_nPixels : null,
-	$init : function(htOption) {
-		console.log("scratch init");
-		this._assignElements();
-		this._createImage();
-		this._nPixels = this._nWidth * this._nHeight;
-		this._htCanvasOffset = this._welCanvas.offset();
-		console.log(this._htCanvasOffset);
-		this._setBackGroundImage("images/slide1.jpg");
-		this._drawImage();
-		this._setEvents();
-	},
-	_assignElements : function() {
-		console.log("_assignElements");
-		this._welScratchPad = jindo.$Element("scratchpad");
-		this._welScratchLog = jindo.$Element("scratchlog");
-		this._elCanvas = document.createElement('canvas');		
-		this._welCanvas = jindo.$Element(this._elCanvas);
-		this._oCtx = this._elCanvas.getContext('2d');
-	},
-	_setEvents : function() {
-		console.log("_setEvents");
-
-		if(this._hasTouch()) {
-			//Touch Event
-			this._wfTouchStart = jindo.$Fn(this._onTouchStart, this);
-			this._wfTouchMove = jindo.$Fn(this._onTouchMove, this);
-			this._wfTouchEnd = jindo.$Fn(this._onTouchEnd, this);
-
-			this._wfTouchStart.attach(this._elCanvas, "touchstart");
-			this._wfTouchMove.attach(this._elCanvas, "touchmove");
-			this._wfTouchEnd.attach(this._elCanvas, "touchend");
-		} else {
+else {
 			//Mouse Event
 			this._wfMouseDown = jindo.$Fn(this._onMouseDown, this);
 			this._wfMouseMove = jindo.$Fn(this._onMouseMove, this);
@@ -85,20 +38,20 @@ var Scratch = $Class({
 		console.log("_onTouchStart");
 		oEvent.stop($Event.CANCEL_ALL);
 		this._bScratch = true;
-		this._onScratchDown(oEvent.touches[0]);		
+		this._onScratchDown(oEvent.$value().touches[0]);		
 		this._overScratchPercentage(this._getScratchPercentage());
 	},
 	_onTouchMove : function(oEvent) {
 		console.log("_onTouchMove");
 		if(this._bScratch){
-			this._onScratchMove(oEvent.touches[0]);
+			this._onScratchMove(oEvent.$value().touches[0]);
 			this._overScratchPercentage(this._getScratchPercentage());
 		}
 	},
 	_onTouchEnd : function(oEvent) {
 		console.log("_onTouchEnd");
 		if(this._bScratch){
-			this._onScratchUp(oEvent.touches[0]);
+			this._onScratchUp();
 			this._bScratch = false;
 			this._overScratchPercentage(this._getScratchPercentage());
 		}
@@ -109,27 +62,27 @@ var Scratch = $Class({
 		//oEvent.stop($Event.CANCEL_DEFAULT);
 		oEvent.stop($Event.CANCEL_ALL);
 		this._bScratch = true;
-		this._onScratchDown(oEvent);		
+		this._onScratchDown(oEvent.pos());		
 		this._overScratchPercentage(this._getScratchPercentage());
 	},
 	_onMouseMove : function(oEvent) {
 		console.log("_onMouseMove");
 		if(this._bScratch){
-			this._onScratchMove(oEvent);
+			this._onScratchMove(oEvent.pos());
 			this._overScratchPercentage(this._getScratchPercentage());
 		}
 	},
 	_onMouseUp : function(oEvent) {
 		console.log("_onMouseUp");
 		if(this._bScratch){
-			this._onScratchUp(oEvent);
+			this._onScratchUp();
 			this._bScratch = false;
 			this._overScratchPercentage(this._getScratchPercentage());
 		}
 	},
 	_onScratchDown : function(oEvent){
 		console.log("_onScratchDown");
-		var oPos = this._getScratchPosition(oEvent.pos());
+		var oPos = this._getScratchPosition(oEvent.pageX, oEvent.pageY);
 		console.log("oPos.pageX: " + oPos.pageX + "oPos.pageY" + oPos.pageY);
 		
 		this._oCtx.globalCompositeOperation = 'destination-out';
@@ -148,11 +101,11 @@ var Scratch = $Class({
 	},
 	_onScratchMove : function(oEvent){
 		console.log("_onScratchMove");
-		var oPos = this._getScratchPosition(oEvent.pos());  
+		var oPos = this._getScratchPosition(oEvent.pageX, oEvent.pageY);  
 		this._oCtx.lineTo(oPos.pageX, oPos.pageY);
 		this._oCtx.stroke();
 	},
-	_onScratchUp : function(oEvent){
+	_onScratchUp : function(){
 		console.log("_onScratchUp");
 		this._oCtx.closePath();
 	},
@@ -169,10 +122,12 @@ var Scratch = $Class({
 		
 		return (nHits / this._nPixels) * 100;
 	},
-	_getScratchPosition : function(oPosition){
+	_getScratchPosition : function(oPositionX, oPositionY){
 		var htPosition = {
-			"pageX" : Math.floor(oPosition.pageX - this._htCanvasOffset.left),
-			"pageY" : Math.floor(oPosition.pageY - this._htCanvasOffset.top)
+			//"pageX" : Math.floor(oPosition.pageX - this._htCanvasOffset.left),
+			//"pageY" : Math.floor(oPosition.pageY - this._htCanvasOffset.top)
+			"pageX" : Math.floor(oPositionX - this._htCanvasOffset.left),
+			"pageY" : Math.floor(oPositionY - this._htCanvasOffset.top)
 		};
 		
 		this._drawLog(htPosition);
